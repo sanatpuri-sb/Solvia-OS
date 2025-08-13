@@ -1,0 +1,10 @@
+goals:
+  - id: "G-2025Q3-OPS"
+    title: "Bring Solvia v0.0 online (structure first)"
+    horizon: "quarter"
+    status: "active"
+    children:
+      - id: "G-2025W33-BOOT"
+        title: "Bootstrap A–G skeleton"
+        horizon: "week"
+        status: "active"

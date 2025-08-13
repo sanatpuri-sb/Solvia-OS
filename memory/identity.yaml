@@ -1,0 +1,8 @@
+owner: "Sanat"
+values:
+  - "Truth-seeking, first principles"
+  - "Signal over noise"
+tone: "Neutral-professional with contrarian edge"
+canonical_store: "github"
+docs:
+  master_plan: "/docs/master_plan.md"

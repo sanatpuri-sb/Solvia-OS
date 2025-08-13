@@ -1,0 +1,7 @@
+beliefs:
+  - id: "B-0001"
+    statement: "Single source of truth prevents drift."
+    confidence: 0.9
+  - id: "B-0002"
+    statement: "Fail-closed governance beats fail-open speed."
+    confidence: 0.85

@@ -1,0 +1,8 @@
+tasks:
+  - id: "T-0001"
+    title: "Create repo structure and seed files"
+    status: "doing"
+    links:
+      goal_ids: ["G-2025W33-BOOT"]
+      belief_ids: ["B-0001","B-0002"]
+    evidence: []
