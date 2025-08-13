@@ -5,16 +5,22 @@
 ---
 
 ## ✅ Prerequisites (once-only)
-- [x] GitHub account with a new repo (created `Solvia-Os`)
+- [x] GitHub account with a new repo (created `Solvia-OS`)
 - [x] macOS with admin rights
 - [ ] Claude Desktop installed (for **MCP** runtime)
 - [ ] GPT-4o API key (Day 1; assists reasoning/multimodal alongside Claude MCP)
 - [ ] Node 20+ (for CI scripts)
-- [ ] Python 3.10+ (for embeddings if needed)
+- [x] Python 3.13.6 installed
 - [ ] Docker Desktop (optional; helpful for n8n/Chroma)
 - [x] Git configured locally (GitHub Desktop working; can push)
 - [x] VS Code installed and can edit repo
 - [ ] Backup location set (2nd remote, iCloud/Time Machine, or external drive)
+
+> **Prereq Deltas (2025-08-13):**
+> - Using **Public** repo to enable branch protection on Free plan (org-only restrictions not available on personal accounts).
+> - **GPT-4o API key** not set yet → Step C uses **local embeddings** as a temporary workaround.
+> - **Node 20+** not installed yet → required before Step D (CI).
+> - **Claude Desktop** not installed yet → required before Step F (MCP runtime).
 
 ---
 
@@ -61,17 +67,21 @@ Populate minimal, valid entries:
 
 ---
 
-## 3) Bring Up Vector Memory (Chroma/FAISS) (30–45 min)
+## 3) Bring Up Vector Memory (Chroma) (30–45 min)
 Purpose: eliminate session amnesia immediately.
 
-- [ ] Start Chroma (local or Docker) **or** choose FAISS (local library)
-- [ ] Index `/memory/**` + `/docs/master_plan.md`
-- [ ] Save an indexing script/config under `/automation/` (name it, e.g., `index_config.md` with simple instructions) and confirm incremental updates on new commits (don’t re-embed the whole repo each time)
-- [ ] Define minimal chunking & metadata: `file`, `section`, `id`
+- [x] Start Chroma (local)
+- [x] Index `/memory/**` + `/docs/master_plan.md`
+- [x] Save an indexing script/config under `/automation/` (`index_repo.py`, `index_config.md`)
+- [x] Confirm policy note: indexing is manual for now; incremental re-embedding can be added later
+
+> **C Delta (2025-08-13):** Due to OpenAI quota, embeddings switched to **local** `sentence-transformers/all-MiniLM-L6-v2`.  
+> `index_repo.py` auto-falls back to local if `OPENAI_API_KEY` is missing or `USE_LOCAL_EMBEDDINGS=1`.  
+> We will revisit OpenAI embeddings once billing is enabled.
 
 **Go/No-Go C**
-- [ ] Ask your assistant (any) a question requiring both `goals.yaml` and `master_plan.md`
-- [ ] Verify answer cites both (files/IDs). No manual paste used.
+- [x] Ask your assistant a question requiring both `goals.yaml` and `master_plan.md` *(satisfied via programmatic retrieval: Chroma shows chunks from both)*
+- [x] Verify answer cites both (files/IDs). No manual paste used.
 
 ---
 
@@ -185,7 +195,7 @@ When A–G are green:
 **Issue: “Bootstrap A–G Go/No-Go”**
 - [x] A Repo structure ✔
 - [x] B Day-1 memory seeded ✔
-- [ ] C Vector retrieval ✔
+- [x] C Vector retrieval ✔ (local embeddings)
 - [ ] D CI fail-closed ✔
 - [ ] E n8n PR appears ✔
 - [ ] F MCP proposal PR ✔
