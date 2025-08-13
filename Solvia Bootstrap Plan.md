@@ -5,14 +5,14 @@
 ---
 
 ## ✅ Prerequisites (once-only)
-- [ ] GitHub account with a new private repo (or a clean branch)
-- [ ] macOS with admin rights
+- [x] GitHub account with a new private repo (or a clean branch)
+- [x] macOS with admin rights
 - [ ] Claude Desktop installed (for **MCP** runtime)
 - [ ] GPT-4o API key (Day 1; assists reasoning/multimodal alongside Claude MCP)
 - [ ] Node 20+ (for CI scripts), Python 3.10+ (for embeddings if needed)
 - [ ] Docker Desktop (optional; helpful for n8n/Chroma)
-- [ ] Git configured locally (SSH keys or token)
-- [ ] VS Code (or preferred editor) installed for local editing of YAML/MD files
+- [x] Git configured locally (SSH keys or token)
+- [x] VS Code installed for local editing of YAML/MD files
 - [ ] GitHub CLI (optional) for command-line/branch PR creation/merges and operations
 - [ ] Backup location for repo (GitHub backup or local clone; maintain at least one secondary local or remote backup for recovery)
 

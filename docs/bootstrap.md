@@ -5,16 +5,16 @@
 ---
 
 ## ✅ Prerequisites (once-only)
-- [ ] GitHub account with a new private repo (or a clean branch)
-- [ ] macOS with admin rights
+- [x] GitHub account with a new repo (created `Solvia-Os`)
+- [x] macOS with admin rights
 - [ ] Claude Desktop installed (for **MCP** runtime)
 - [ ] GPT-4o API key (Day 1; assists reasoning/multimodal alongside Claude MCP)
-- [ ] Node 20+ (for CI scripts), Python 3.10+ (for embeddings if needed)
+- [ ] Node 20+ (for CI scripts)
+- [ ] Python 3.10+ (for embeddings if needed)
 - [ ] Docker Desktop (optional; helpful for n8n/Chroma)
-- [ ] Git configured locally (SSH keys or token)
-- [ ] VS Code (or preferred editor) installed for local editing of YAML/MD files
-- [ ] GitHub CLI (optional) for command-line/branch PR creation/merges and operations
-- [ ] Backup location for repo (GitHub backup or local clone; maintain at least one secondary local or remote backup for recovery)
+- [x] Git configured locally (GitHub Desktop working; can push)
+- [x] VS Code installed and can edit repo
+- [ ] Backup location set (2nd remote, iCloud/Time Machine, or external drive)
 
 ---
 
@@ -39,8 +39,8 @@ Create folders and seed files. **GitHub is the only writable source of truth.** 
 Note: `/automation` and `/workflows` are operational folders for automation configs and workflow exports, not part of core memory.
 
 **Go/No-Go A**
-- [ ] All folders exist and render on GitHub
-- [ ] Day-1 memory files exist (even if minimal)
+- [x] All folders exist and render on GitHub
+- [x] Day-1 memory files exist (minimal)
 
 ---
 
@@ -56,7 +56,7 @@ Populate minimal, valid entries:
 - `metrics.yaml`: keys present, values can be null
 
 **Go/No-Go B**
-- [ ] Day-1 files commit cleanly; IDs (`G-…`, `B-…`, `T-…`, `C-…`) are present where relevant
+- [x] Day-1 files commit cleanly; IDs (`G-…`, `B-…`, `T-…`, `C-…`) are present where relevant
 - [ ] No schema/format errors (we’ll enforce in §4)
 
 ---
@@ -183,10 +183,10 @@ When A–G are green:
 ## 🧪 Quick Checklists (copy into issues)
 
 **Issue: “Bootstrap A–G Go/No-Go”**
-- [ ] A Repo structure ✔
-- [ ] B Vector retrieval ✔
-- [ ] C CI fail-closed ✔
-- [ ] D CI blocks invalid PR ✔
+- [x] A Repo structure ✔
+- [x] B Day-1 memory seeded ✔
+- [ ] C Vector retrieval ✔
+- [ ] D CI fail-closed ✔
 - [ ] E n8n PR appears ✔
 - [ ] F MCP proposal PR ✔
 - [ ] G Smoke test (read→retrieve→propose→validate→reflect) ✔
