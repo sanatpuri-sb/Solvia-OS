@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Solvia Bootstrap Plan.md",
+                "file": "docs/master_plan.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Solvia Bootstrap Plan"
+              "title": "master_plan"
             }
           }
         ]
@@ -170,8 +170,16 @@
   },
   "active": "ad63d0248a3c75bd",
   "lastOpenFiles": [
-    "Thoughts & Clarifications.md",
+    "memory/metrics.yaml",
+    "memory/decisions.md",
+    "memory/contradictions.yaml",
+    "memory/tasks.yaml",
+    "memory/beliefs.yaml",
+    "memory/goals.yaml",
+    "memory/identity.yaml",
+    "docs/bootstrap.md",
     "Solvia Bootstrap Plan.md",
+    "Thoughts & Clarifications.md",
     "Solvia Master Plan.md"
   ]
 }
