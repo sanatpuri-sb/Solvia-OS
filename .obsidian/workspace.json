@@ -170,6 +170,8 @@
   },
   "active": "ad63d0248a3c75bd",
   "lastOpenFiles": [
+    "workflows/ci.yaml",
+    "workflows",
     "Solvia Bootstrap Plan.md",
     "docs/master_plan.md",
     "memory/metrics.yaml",
