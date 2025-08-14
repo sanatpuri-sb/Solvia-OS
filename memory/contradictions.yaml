@@ -1,1 +1,5 @@
-contradictions: []
+contradictions:
+  - id: "C-0001"
+    description: "Branch protection expects status checks/approvals, but CI doesn’t exist yet."
+    belief_ids: ["B-0001", "B-0004"]
+    proposed_fix: "Add CI in Step D, then re-enable status checks and approvals."

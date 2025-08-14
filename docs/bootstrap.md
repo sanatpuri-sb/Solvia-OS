@@ -74,6 +74,7 @@ Purpose: eliminate session amnesia immediately.
 - [x] Index `/memory/**` + `/docs/master_plan.md`
 - [x] Save an indexing script/config under `/automation/` (`index_repo.py`, `index_config.md`)
 - [x] Confirm policy note: indexing is manual for now; incremental re-embedding can be added later
+- [x] `.gitignore` excludes the local vector DB at `automation/chroma/`
 
 > **C Delta (2025-08-13):** Due to OpenAI quota, embeddings switched to **local** `sentence-transformers/all-MiniLM-L6-v2`.  
 > `index_repo.py` auto-falls back to local if `OPENAI_API_KEY` is missing or `USE_LOCAL_EMBEDDINGS=1`.  
@@ -88,6 +89,10 @@ Purpose: eliminate session amnesia immediately.
 ## 4) Fail-Closed Governance (CI) (30 min)
 Purpose: prevent phantom files & drift.
 
+> **D Delta (2025-08-13):** While CI is not yet configured, branch protection is **PR-only with linear history**;  
+> “Require approvals” and “Require status checks” are **temporarily disabled** to allow solo merges.  
+> They must be **re-enabled** immediately after CI is added in this step.
+
 - [ ] Add a GitHub Action workflow file at `.github/workflows/ci.yml` that enforces:
 - YAML lint + JSON-schema checks (at least structure & required keys); include `decisions.md` Markdown lint for broken headings/links
 - Path allow-list strictly enforced (deny writes outside `/memory`, `/docs`, `/proposals`, `/logs`, `/automation`)
@@ -95,6 +100,8 @@ Purpose: prevent phantom files & drift.
 - ID format checks for `G-`, `B-`, `T-`, `C-` where applicable
 - [ ] Mark invalid PRs as **fail** (no merge)
 - [ ] Main branch must be protected in GitHub settings; require CI pass before merge
+- [ ] Re-enable **Require status checks to pass before merging** (after CI is green on `main`)
+- [ ] Re-enable **Require approvals (1)** (solo-friendly only when a second account can review)
 
 *(If you don’t have scripts yet, stub the job to at least lint YAML + deny unknown paths; you can harden later.)*
 
