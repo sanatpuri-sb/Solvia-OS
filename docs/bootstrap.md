@@ -21,6 +21,7 @@
 > - **GPT-4o API key** not set yet → Step C uses **local embeddings** as a temporary workaround.
 > - **Node 20+** not installed yet → required before Step D (CI).
 > - **Claude Desktop** not installed yet → required before Step F (MCP runtime).
+> - Authoring aid: VS Code **AI inline completions** (e.g., GitHub Copilot) is enabled. Treat suggestions as drafts; structure enforced by CI in Step D.
 
 ---
 
@@ -89,6 +90,10 @@ Purpose: eliminate session amnesia immediately.
 ## 4) Fail-Closed Governance (CI) (30 min)
 Purpose: prevent phantom files & drift.
 
+**Editor validation (schema hints)**
+- [ ] Add `.vscode/settings.json` in repo root to map YAML files → JSON Schemas
+- [ ] Confirm VS Code shows red squiggles on bad keys/IDs
+
 > **D Delta (2025-08-13):** While CI is not yet configured, branch protection is **PR-only with linear history**;  
 > “Require approvals” and “Require status checks” are **temporarily disabled** to allow solo merges.  
 > They must be **re-enabled** immediately after CI is added in this step.
@@ -98,6 +103,8 @@ Purpose: prevent phantom files & drift.
 - Path allow-list strictly enforced (deny writes outside `/memory`, `/docs`, `/proposals`, `/logs`, `/automation`)
 - Referential integrity (e.g., `tasks.links.beliefs` exist)
 - ID format checks for `G-`, `B-`, `T-`, `C-` where applicable
+- [ ] Add `.vscode/settings.json` schema mappings for YAML files
+- [ ] Verify VS Code validation works (introduce a fake key in `memory/tasks.yaml` → red squiggle appears)
 - [ ] Mark invalid PRs as **fail** (no merge)
 - [ ] Main branch must be protected in GitHub settings; require CI pass before merge
 - [ ] Re-enable **Require status checks to pass before merging** (after CI is green on `main`)
@@ -107,6 +114,7 @@ Purpose: prevent phantom files & drift.
 
 **Go/No-Go D**
 - [ ] Intentionally break a key in `tasks.yaml` on a PR → CI blocks merge
+- [ ] Local editor shows schema errors (bad key in `tasks.yaml` squiggled) before CI runs
 
 ---
 
@@ -217,3 +225,4 @@ When A–G are green:
 ## 📎 Notes
 - `decisions.md` is Markdown for narrative clarity; all other core memory is YAML for strict structure.  
 - Keep all schema/doc choices **inside the repo**, so any assistant (Claude/GPT) can pick up instantly with zero paste.
+- VS Code AI inline completions (e.g., GitHub Copilot) are enabled for YAML authoring; structure enforced via schema hints and CI.
