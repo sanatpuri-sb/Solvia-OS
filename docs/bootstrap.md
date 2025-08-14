@@ -91,30 +91,38 @@ Purpose: eliminate session amnesia immediately.
 Purpose: prevent phantom files & drift.
 
 **Editor validation (schema hints)**
-- [ ] Add `.vscode/settings.json` in repo root to map YAML files → JSON Schemas
-- [ ] Confirm VS Code shows red squiggles on bad keys/IDs
+- [x] Add `.vscode/settings.json` in repo root to map YAML files → JSON Schemas
+- [x] Confirm VS Code shows red squiggles on bad keys/IDs
 
 > **D Delta (2025-08-13):** While CI is not yet configured, branch protection is **PR-only with linear history**;  
 > “Require approvals” and “Require status checks” are **temporarily disabled** to allow solo merges.  
 > They must be **re-enabled** immediately after CI is added in this step.
 
-- [ ] Add a GitHub Action workflow file at `.github/workflows/ci.yml` that enforces:
+- [x] Add a GitHub Action workflow file at `.github/workflows/ci.yml` that enforces:
 - YAML lint + JSON-schema checks (at least structure & required keys); include `decisions.md` Markdown lint for broken headings/links
 - Path allow-list strictly enforced (deny writes outside `/memory`, `/docs`, `/proposals`, `/logs`, `/automation`)
 - Referential integrity (e.g., `tasks.links.beliefs` exist)
 - ID format checks for `G-`, `B-`, `T-`, `C-` where applicable
-- [ ] Add `.vscode/settings.json` schema mappings for YAML files
-- [ ] Verify VS Code validation works (introduce a fake key in `memory/tasks.yaml` → red squiggle appears)
-- [ ] Mark invalid PRs as **fail** (no merge)
-- [ ] Main branch must be protected in GitHub settings; require CI pass before merge
-- [ ] Re-enable **Require status checks to pass before merging** (after CI is green on `main`)
+- [x] Add `.vscode/settings.json` schema mappings for YAML files
+- [x] Verify VS Code validation works (introduce a fake key in `memory/tasks.yaml` → red squiggle appears)
+- [x] Mark invalid PRs as **fail** (no merge)
+- [x] Main branch must be protected in GitHub settings; require CI pass before merge
+- [x] Branch protection → Required status checks: add **`validate`** (use the exact name shown in your PR Checks)
+- [x] Re-enable **Require status checks to pass before merging** (after CI is green on `main`)
 - [ ] Re-enable **Require approvals (1)** (solo-friendly only when a second account can review)
 
 *(If you don’t have scripts yet, stub the job to at least lint YAML + deny unknown paths; you can harden later.)*
 
 **Go/No-Go D**
-- [ ] Intentionally break a key in `tasks.yaml` on a PR → CI blocks merge
-- [ ] Local editor shows schema errors (bad key in `tasks.yaml` squiggled) before CI runs
+- [x] Intentionally break a key in `tasks.yaml` on a PR → CI blocks merge
+- [x] Local editor shows schema errors (bad key in `tasks.yaml` squiggled) before CI runs
+
+### 4.1 D+1 Hardening Actions (to schedule)
+- [ ] Expand markdownlint scope back to `docs/**/*.md` (currently limited to `memory/decisions.md`)
+- [ ] Add proposal schema at `automation/schemas/proposal.schema.json` and validate `/proposals/**/*.yaml` in CI
+- [ ] Add a CI job to auto-format Markdown (Prettier) before enforcing full markdownlint
+- [ ] Add status check aliasing (if job name changes, update Branch Protection to match current check name)
+- [ ] Enable **Require approvals (1)** after a second reviewer (or Org) is available
 
 ---
 
@@ -211,7 +219,7 @@ When A–G are green:
 - [x] A Repo structure ✔
 - [x] B Day-1 memory seeded ✔
 - [x] C Vector retrieval ✔ (local embeddings)
-- [ ] D CI fail-closed ✔
+- [x] D CI fail-closed ✔
 - [ ] E n8n PR appears ✔
 - [ ] F MCP proposal PR ✔
 - [ ] G Smoke test (read→retrieve→propose→validate→reflect) ✔
