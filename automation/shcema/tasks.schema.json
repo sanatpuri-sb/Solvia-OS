@@ -1,0 +1,67 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "tasks"
+    ],
+    "properties": {
+        "tasks": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "status",
+                    "links"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^T-[0-9]{4}"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "enum": [
+                            "todo",
+                            "doing",
+                            "done",
+                            "blocked"
+                        ]
+                    },
+                    "links": {
+                        "type": "object",
+                        "required": [
+                            "goal_ids",
+                            "belief_ids"
+                        ],
+                        "properties": {
+                            "goal_ids": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "pattern": "^G-"
+                                }
+                            },
+                            "belief_ids": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "pattern": "^B-"
+                                }
+                            }
+                        }
+                    },
+                    "evidence": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

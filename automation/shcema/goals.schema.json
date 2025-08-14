@@ -1,0 +1,85 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "goals"
+    ],
+    "properties": {
+        "goals": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "horizon",
+                    "status"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^G-[A-Z0-9-]+"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "horizon": {
+                        "enum": [
+                            "quarter",
+                            "month",
+                            "week"
+                        ]
+                    },
+                    "status": {
+                        "enum": [
+                            "active",
+                            "paused",
+                            "done"
+                        ]
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "id",
+                                "title",
+                                "horizon",
+                                "status"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "pattern": "^G-[A-Z0-9-]+"
+                                },
+                                "title": {
+                                    "type": "string"
+                                },
+                                "horizon": {
+                                    "enum": [
+                                        "quarter",
+                                        "month",
+                                        "week"
+                                    ]
+                                },
+                                "status": {
+                                    "enum": [
+                                        "active",
+                                        "paused",
+                                        "done"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

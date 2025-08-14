@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "contradictions"
+    ],
+    "properties": {
+        "contradictions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^C-[0-9]{4}"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "belief_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "pattern": "^B-"
+                        }
+                    },
+                    "proposed_fix": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

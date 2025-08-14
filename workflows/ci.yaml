@@ -1,10 +1,34 @@
-name: CI placeholder
+name: Solvia CI
+
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
 jobs:
-  noop:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Succeed
-        run: echo "ok"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm install ajv js-yaml glob markdownlint-cli
+
+      - name: Set PR SHAs
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo "GITHUB_BASE_SHA=${{ github.event.pull_request.base.sha }}" >> $GITHUB_ENV
+          echo "GITHUB_HEAD_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+
+      - name: Validate repo structure & YAML schemas
+        run: node automation/validate.js
+
+      - name: Lint Markdown (docs and decisions)
+        run: npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config .markdownlint.json
