@@ -2,9 +2,9 @@ name: Solvia CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   validate:
@@ -13,12 +13,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # <-- fetch full history so git diff can see base/head SHAs
+          fetch-depth: 0 # <-- fetch full history so git diff can see base/head SHAs
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install deps
         run: npm install ajv ajv-formats js-yaml glob markdownlint-cli
@@ -31,6 +31,9 @@ jobs:
 
       - name: Validate repo structure & YAML schemas
         run: node automation/validate.js
+
+      - name: Prettier (check formatting)
+        run: npx prettier --check "docs/**/*.md" "memory/decisions.md"
 
       - name: Lint Markdown (docs & decisions)
         run: npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config .markdownlint.json
