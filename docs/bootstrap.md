@@ -226,5 +226,3 @@ When A–G are green:
 - `decisions.md` is Markdown for narrative clarity; all other core memory is YAML for strict structure.  
 - Keep all schema/doc choices **inside the repo**, so any assistant (Claude/GPT) can pick up instantly with zero paste.
 - VS Code AI inline completions (e.g., GitHub Copilot) are enabled for YAML authoring; structure enforced via schema hints and CI.
-
-test
