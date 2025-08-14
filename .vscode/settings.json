@@ -1,0 +1,13 @@
+{
+  "yaml.schemas": {
+    "file:///${workspaceFolder}/automation/schemas/identity.schema.json": "memory/identity.yaml",
+    "file:///${workspaceFolder}/automation/schemas/goals.schema.json": "memory/goals.yaml",
+    "file:///${workspaceFolder}/automation/schemas/beliefs.schema.json": "memory/beliefs.yaml",
+    "file:///${workspaceFolder}/automation/schemas/tasks.schema.json": "memory/tasks.yaml",
+    "file:///${workspaceFolder}/automation/schemas/contradictions.schema.json": "memory/contradictions.yaml",
+    "file:///${workspaceFolder}/automation/schemas/metrics.schema.json": "memory/metrics.yaml"
+  },
+  "yaml.validate": true,
+  "yaml.format.enable": true,
+  "editor.formatOnSave": true
+}
