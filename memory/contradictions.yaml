@@ -4,12 +4,12 @@ contradictions:
     belief_ids: ["B-0001", "B-0004"]
     proposed_fix: "Add CI in Step D, then re-enable status checks and approvals."
   - id: "C-0002"
-    statement: "Governance says 'require approvals' but solo workflow blocks merges."
+    description: "Governance says 'require approvals' but solo workflow blocks merges."
     impact: "Slows progress; manual self-review friction."
     proposed_fix: "Keep approvals off until a second reviewer account exists or org repo is used; rely on CI + branch protection (required checks, linear history). Revisit after MCP handoff."
     status: open
   - id: "C-0003"
-    statement: "Docs quality goal vs. markdownlint limited to decisions only."
+    description: "Docs quality goal vs. markdownlint limited to decisions only."
     impact: "Non-decision docs can drift; style debt accumulates."
     proposed_fix: "Run one-time formatting pass; expand CI to 'docs/**/*.md' (Bootstrap §4.1)."
     status: open
