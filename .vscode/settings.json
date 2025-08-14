@@ -10,5 +10,6 @@
   },
   "yaml.validate": true,
   "yaml.format.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true
 }
