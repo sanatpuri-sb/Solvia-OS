@@ -12,16 +12,17 @@ const safeLoad = (p) => yaml.load(read(p));
 
 // ---------- Path allow-list ----------
 const allowed = [
-    /^\.github\/workflows\/.+$/,
-    /^automation\/(schemas\/.+|validate\.js|index_repo\.py|index_config\.md)$/,
-    /^docs\/.+$/,
-    /^memory\/.+$/,
-    /^proposals\/.+$/,
-    /^logs\/.+$/,
-    /^workflows\/.+$/,
+    /^\.github\/workflows\/.+$/,                                  // CI workflow(s)
+    /^automation\/(schemas\/.+|validate\.js|index_repo\.py|index_config\.md)$/, // automation bits
+    /^docs\/.+$/,                                                 // docs
+    /^memory\/.+$/,                                               // memory files
+    /^proposals\/.+$/,                                            // proposals
+    /^logs\/.+$/,                                                 // logs (append-only)
+    /^workflows\/.+$/,                                            // n8n exports
     /^\.gitignore$/,
+    /^\.gitattributes$/,
     /^\.markdownlint\.json$/,
-    /^\.vscode\/settings\.json$/
+    /^\.vscode\/settings\.json$/                                  // editor schema hints
 ];
 
 // Changed files (PR) or all tracked files (push)
