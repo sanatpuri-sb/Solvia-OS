@@ -48,3 +48,7 @@
 
 - 2025-08-14: Added Prettier config + `.prettierignore`; optional autoformatting
   available pre-commit, strict enforcement deferred.
+
+- 2025-08-14: CI uses GitHub-hosted runners with Node 20 (pinned via actions).
+  Local Node is optional unless running validators/Prettier locally or
+  installing n8n. Prereq updated accordingly.

@@ -12,12 +12,17 @@
 - [x] macOS with admin rights
 - [ ] Claude Desktop installed (for **MCP** runtime)
 - [ ] GPT-4o API key (Day 1; assists reasoning/multimodal alongside Claude MCP)
-- [ ] Node 20+ (for CI scripts)
+- [ ] Node 20+ (only if you’ll run tools locally or install n8n; CI runners
+      already have Node 20)
 - [x] Python 3.13.6 installed
 - [ ] Docker Desktop (optional; helpful for n8n/Chroma)
 - [x] Git configured locally (GitHub Desktop working; can push)
 - [x] VS Code installed and can edit repo
 - [ ] Backup location set (2nd remote, iCloud/Time Machine, or external drive)
+
+**Note:** CI runs on GitHub-hosted runners with Node 20 preinstalled and pinned
+in the workflow. You only need local Node if you want to run
+validation/formatting locally or to install/run n8n (Step E).
 
 > **Prereq Deltas (2025-08-13):**
 >
@@ -168,6 +173,7 @@ unknown paths; you can harden later.)_
 Purpose: close loops without you as glue.
 
 - [ ] Run n8n (Docker or local)
+  > Requires Node 20+ (local) **or** Docker. Choose one.
 - [ ] Create 2 simple workflows:
 
 1. **Proposals Cron (daily)**: read repo → write a tiny, valid proposal to
