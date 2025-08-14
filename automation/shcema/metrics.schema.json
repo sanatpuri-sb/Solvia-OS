@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "proposal_merge_rate": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "contradictions_closed_per_week": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "goals_with_progress_pct": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "proposal_cycle_time_avg_hours": {
+            "type": [
+                "number",
+                "null"
+            ]
+        }
+    },
+    "additionalProperties": true
+}
