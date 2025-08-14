@@ -1,5 +1,14 @@
 {
     "default": true,
-    "MD013": false, // line length
-    "MD033": false // inline HTML
+    "MD013": false,
+    "MD022": false,
+    "MD032": false,
+    "MD012": false,
+    "MD009": false,
+    "MD033": false,
+    "MD041": false,
+    "MD036": false,
+    "MD007": {
+        "indent": 2
+    }
 }

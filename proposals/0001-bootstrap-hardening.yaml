@@ -1,0 +1,20 @@
+title: "Wire proposal schema + docs lint"
+rationale: "Enforce structure on proposals; expand lint to docs with relaxed rules to prevent regressions."
+linked_metrics:
+  - "proposal_merge_rate"
+  - "proposal_cycle_time_avg_hours"
+risk: "low"
+changes:
+  - file: "automation/schemas/proposal.schema.json"
+    type: "add"
+    preview: "Adds JSON Schema for proposals."
+  - file: ".github/workflows/ci.yaml"
+    type: "edit"
+    preview: "Expands markdownlint scope to docs/**/*.md; uses .markdownlint.json."
+tests_added:
+  - "CI validate logs show 'proposals/**/*.yaml' schema pass"
+  - "Markdownlint step runs on docs without failure"
+rollback: "Revert this PR; CI will restore previous behavior."
+acceptance_criteria:
+  - "CI validate shows proposal schema pass"
+  - "Branch protection requires status 'validate' and PR merges cleanly"
