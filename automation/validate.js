@@ -13,17 +13,19 @@ const safeLoad = (p) => yaml.load(read(p));
 
 // ---------- Path allow-list ----------
 const allowed = [
-    /^\.github\/workflows\/.+$/,                                   // CI workflow(s)
-    /^automation\/(schemas\/.+|validate\.js|index_repo\.py|index_config\.md)$/, // automation bits
-    /^docs\/.+$/,                                                  // docs
-    /^memory\/.+$/,                                                // memory files
-    /^proposals\/.+$/,                                             // proposals
-    /^logs\/.+$/,                                                  // logs (append-only)
-    /^workflows\/.+$/,                                             // n8n exports
-    /^\.gitignore$/,
-    /^\.gitattributes$/,
-    /^\.markdownlint\.json$/,                                      // ← add/keep this
-    /^\.vscode\/settings\.json$/                                   // editor schema hints
+  /^\.github\/workflows\/.+$/,                                  // CI workflow(s)
+  /^automation\/(schemas\/.+|validate\.js|index_repo\.py|index_config\.md)$/, // automation bits
+  /^docs\/.+$/,                                                 // docs
+  /^memory\/.+$/,                                               // memory files
+  /^proposals\/.+$/,                                            // proposals
+  /^logs\/.+$/,                                                 // logs (append-only)
+  /^workflows\/.+$/,                                            // n8n exports
+  /^\.gitignore$/,
+  /^\.gitattributes$/,
+  /^\.markdownlint\.json$/,
+  /^\.vscode\/settings\.json$/,                                 // editor schema hints
+  /^\.prettierignore$/,                                         // ← allow Prettier ignore at repo root
+  /^\.prettierrc(?:\.json)?$/                                   // ← allow Prettier config at repo root
 ];
 
 // Changed files (PR) or all tracked files (push)
