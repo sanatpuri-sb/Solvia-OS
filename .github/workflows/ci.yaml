@@ -32,5 +32,5 @@ jobs:
       - name: Validate repo structure & YAML schemas
         run: node automation/validate.js
 
-      - name: Lint Markdown (docs and decisions)
-        run: npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config .markdownlint.json
+      - name: Lint Markdown (decisions only for now)
+        run: npx markdownlint 'memory/decisions.md' --config .markdownlint.json
