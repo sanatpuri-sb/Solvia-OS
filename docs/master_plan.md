@@ -2,12 +2,13 @@
 
 ## 🧭 Vision
 
-You are building a **self-learning, execution-capable, AI-powered business system** — designed to
-operate as your high-performance solo founder infrastructure.
+You are building a **self-learning, execution-capable, AI-powered business
+system** — designed to operate as your high-performance solo founder
+infrastructure.
 
-This is not a chatbot, and not just a productivity assistant — it is a **persistent, evolving
-operating system for your company**, capable of reasoning, executing, and improving itself over
-time.
+This is not a chatbot, and not just a productivity assistant — it is a
+**persistent, evolving operating system for your company**, capable of
+reasoning, executing, and improving itself over time.
 
 **Solvia Will Be (Can Evolve):**
 
@@ -45,7 +46,8 @@ Principles that govern every layer:
 
 ## 🧱 Full Stack (Can Evolve)
 
-All tools and formats are **starting points** — Solvia can replace or upgrade them as it matures.
+All tools and formats are **starting points** — Solvia can replace or upgrade
+them as it matures.
 
 | Layer                   | Tool(s) (Current)                        | Purpose                                                                                                                              |
 | ----------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -64,7 +66,8 @@ All tools and formats are **starting points** — Solvia can replace or upgrade 
 
 ## 🛠️ Assistant Responsibilities (Can Evolve)
 
-**Internal-Facing Execution Only** — no direct customer-facing actions until explicitly approved.
+**Internal-Facing Execution Only** — no direct customer-facing actions until
+explicitly approved.
 
 **1. You (the person)**
 
@@ -72,9 +75,10 @@ All tools and formats are **starting points** — Solvia can replace or upgrade 
 - Suggest habit, time use, and learning optimizations
 - Act as co-pilot for skills development **2. Your Business (core function)**
 - Build your startup from zero to scale
-- Create, evolve, and execute: - Business model & plan - Strategy decks - Social media plans -
-  Growth experiments - Financial projections - P&L / budgets - Compliance checklists - Incorporation
-  plans (country-specific) **3. Operations + Tasks**
+- Create, evolve, and execute: - Business model & plan - Strategy decks - Social
+  media plans - Growth experiments - Financial projections - P&L / budgets -
+  Compliance checklists - Incorporation plans (country-specific) **3.
+  Operations + Tasks**
 - Mark tasks complete
 - Send internal reminders
 - Track due dates
@@ -154,21 +158,23 @@ Solvia measures itself against:
 
 ## 🔄 The Self-Build Loop (Can Evolve)
 
-Automation starts by improving its **own memory and workflows** before touching business
-deliverables.
+Automation starts by improving its **own memory and workflows** before touching
+business deliverables.
 
 1. **Read**: Load all memory + recent logs.
 2. **Propose**: Suggest updates or new files into `/proposals`.
 3. **Validate**: Schema check + guardrails.
 4. **Approve**: Auto-merge low-risk; queue others for manual review.
 5. **Apply**: Commit to GitHub, sync to other tools if needed.
-6. **Reflect**: Update `decisions.md`, `metrics.yaml`, `contradictions.yaml` via a proposal PR (no
-   direct main writes); commit via MCP or automation engine, not manual edits.
+6. **Reflect**: Update `decisions.md`, `metrics.yaml`, `contradictions.yaml` via
+   a proposal PR (no direct main writes); commit via MCP or automation engine,
+   not manual edits.
 7. **Repeat**: Daily at fixed time via n8n cron job; manual trigger allowed.
 
-> **Note:** The loop is not limited to content and workflow updates — it can also propose toolchain
-> or architecture changes (e.g., replacing ChromaDB with Weaviate, swapping automation engines, or
-> altering memory formats) when beneficial.
+> **Note:** The loop is not limited to content and workflow updates — it can
+> also propose toolchain or architecture changes (e.g., replacing ChromaDB with
+> Weaviate, swapping automation engines, or altering memory formats) when
+> beneficial.
 
 ---
 
@@ -177,12 +183,13 @@ deliverables.
 - Canonical store: GitHub `/memory` & `/docs` (only writable source of truth)
 - Mirrors: Notion, Obsidian, Asana/Airtable (read-only, synced by automation)
 - Fail-closed validation: schema + integrity checks in CI block invalid merges
-- Auto-rollback: failed merges or corrupted memory revert automatically; rollback and recovery
-  procedures are in /docs/bootstrap.md; maintain at least one local or remote backup clone for repo
-  recovery
+- Auto-rollback: failed merges or corrupted memory revert automatically;
+  rollback and recovery procedures are in /docs/bootstrap.md; maintain at least
+  one local or remote backup clone for repo recovery
 - Branch protection: main branch blocks direct pushes; CI must pass before merge
-- Write policy: Claude MCP and automation engine may write only to `/proposals/` via PRs; no direct
-  main-branch edits allowed; CI guardrails are defined in .github/workflows/ci.yml
+- Write policy: Claude MCP and automation engine may write only to `/proposals/`
+  via PRs; no direct main-branch edits allowed; CI guardrails are defined in
+  .github/workflows/ci.yml
 - Optional auditor: read-only agent or CI review on medium/high-risk proposals
 
 ---
@@ -207,12 +214,14 @@ deliverables.
 
 We will:
 
-- Back up the repo (GitHub backup or local clone; maintain at least one secondary local or remote
-  backup for recovery) before starting automation **0. Environment sanity check**
+- Back up the repo (GitHub backup or local clone; maintain at least one
+  secondary local or remote backup for recovery) before starting automation **0.
+  Environment sanity check**
 - python --version (>=3.10), node --version (>=20), git --version
 - Docker Desktop running (if you’ll use n8n/Chroma containers)
 - GitHub auth OK (SSH or PAT) → `git ls-remote` succeeds
-- Editor available (VS Code or preferred) to create/commit `.yaml`/`.md` **1. Install**:
+- Editor available (VS Code or preferred) to create/commit `.yaml`/`.md` **1.
+  Install**:
 - Python (latest)
 - Git + GitHub
 - VS Code
@@ -220,11 +229,13 @@ We will:
 - Docker Desktop (optional; required if running n8n or Chroma via container)
 - GitHub CLI (optional; speeds up PR and branch operations)
 - Notion Developer access
-- GPT-4o API key + Claude Desktop (MCP runtime) — both Day 1 (Claude provides MCP tool/file access)
+- GPT-4o API key + Claude Desktop (MCP runtime) — both Day 1 (Claude provides
+  MCP tool/file access)
 - ChromaDB or FAISS (local)
-- n8n (preferred) / Zapier / Make **2. Create** core structure: /memory /proposals /automation /docs
-  /logs /workflows Note: `/workflows` stores exported automation engine workflows (e.g., n8n `.json`
-  exports) **3. Write** initial memory files:
+- n8n (preferred) / Zapier / Make **2. Create** core structure: /memory
+  /proposals /automation /docs /logs /workflows Note: `/workflows` stores
+  exported automation engine workflows (e.g., n8n `.json` exports) **3. Write**
+  initial memory files:
 - identity.yaml
 - beliefs.yaml
 - goals.yaml
@@ -233,7 +244,7 @@ We will:
 - decisions.md
 - metrics.yaml  
   **4. Run first test**:
-- Model reads memory → creates proposal file → validates → commits to `/proposals` **5. Save vector
-  index config**
-- Add /automation/index_config.md with indexing instructions and confirm incremental updates on new
-  commits (don’t re-embed the whole repo each time)
+- Model reads memory → creates proposal file → validates → commits to
+  `/proposals` **5. Save vector index config**
+- Add /automation/index_config.md with indexing instructions and confirm
+  incremental updates on new commits (don’t re-embed the whole repo each time)
