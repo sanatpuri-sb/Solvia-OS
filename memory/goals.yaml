@@ -1,10 +1,15 @@
 goals:
   - id: "G-2025Q3-OPS"
-    title: "Bring Solvia v0.0 online (structure first)"
+    title: "Stand up Solvia OS (A–G) and hand off to MCP"
     horizon: "quarter"
     status: "active"
+    metrics: ["proposal_merge_rate", "proposal_cycle_time_avg_hours"]
     children:
-      - id: "G-2025W33-BOOT"
-        title: "Bootstrap A–G skeleton"
-        horizon: "week"
+      - id: "G-2025Q3-C"
+        title: "Vector memory online"
+        horizon: "month"
+        status: "done"
+      - id: "G-2025Q3-D"
+        title: "CI guardrails fail-closed"
+        horizon: "month"
         status: "active"

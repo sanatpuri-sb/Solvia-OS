@@ -6,3 +6,10 @@ tasks:
       goal_ids: ["G-2025W33-BOOT"]
       belief_ids: ["B-0001","B-0002"]
     evidence: []
+  - id: "T-0002"
+    title: "Add CI workflow + validators (Step D)"
+    status: "doing"
+    links:
+      goal_ids: ["G-2025Q3-D"]
+      belief_ids: ["B-0001", "B-0004"]
+    evidence: []
