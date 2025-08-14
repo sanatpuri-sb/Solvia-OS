@@ -21,3 +21,7 @@
 - 2025-08-14: Proposal schema validation deferred; to add `automation/schemas/proposal.schema.json` and CI check for `/proposals/**` (D+1).
 
 - 2025-08-14: Branch protection updated — PR-only, **Require status checks** = `validate`, **Require linear history**; approvals left off for solo flow.
+
+- 2025-08-14: Proposal schema added at `automation/schemas/proposal.schema.json`; CI validates `/proposals/**/*.yaml`.
+
+- 2025-08-14: Markdownlint expanded to `docs/**/*.md` using relaxed `.markdownlint.json` at repo root.

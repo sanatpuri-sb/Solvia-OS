@@ -118,10 +118,10 @@ Purpose: prevent phantom files & drift.
 - [x] Local editor shows schema errors (bad key in `tasks.yaml` squiggled) before CI runs
 
 ### 4.1 D+1 Hardening Actions (to schedule)
-- [ ] Expand markdownlint scope back to `docs/**/*.md` (currently limited to `memory/decisions.md`)
-- [ ] Add proposal schema at `automation/schemas/proposal.schema.json` and validate `/proposals/**/*.yaml` in CI
-- [ ] Add a CI job to auto-format Markdown (Prettier) before enforcing full markdownlint
-- [ ] Add status check aliasing (if job name changes, update Branch Protection to match current check name)
+- + [x] Expand markdownlint scope back to `docs/**/*.md` with config in `.markdownlint.json` at repo root
+- [x] Add proposal schema at `automation/schemas/proposal.schema.json` and validate `/proposals/**/*.yaml` in CI (schema in `automation/schemas/`, proposals under `proposals/`)
+- [ ] Add a CI job to auto-format Markdown (Prettier) before enforcing strict markdownlint  ⟵ (keep scheduled; optional if relaxed rules suffice)
+- [x] Add status check aliasing (if job name changes, update Branch Protection to match current check name)
 - [ ] Enable **Require approvals (1)** after a second reviewer (or Org) is available
 
 ---

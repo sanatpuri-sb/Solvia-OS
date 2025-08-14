@@ -5,7 +5,8 @@
     "file:///${workspaceFolder}/automation/schemas/beliefs.schema.json": "memory/beliefs.yaml",
     "file:///${workspaceFolder}/automation/schemas/tasks.schema.json": "memory/tasks.yaml",
     "file:///${workspaceFolder}/automation/schemas/contradictions.schema.json": "memory/contradictions.yaml",
-    "file:///${workspaceFolder}/automation/schemas/metrics.schema.json": "memory/metrics.yaml"
+    "file:///${workspaceFolder}/automation/schemas/metrics.schema.json": "memory/metrics.yaml",
+    "file:///${workspaceFolder}/automation/schemas/proposal.schema.json": "proposals/**/*.yaml"
   },
   "yaml.validate": true,
   "yaml.format.enable": true,

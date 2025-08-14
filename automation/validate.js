@@ -82,6 +82,35 @@ function validateSchemas() {
     return ok;
 }
 
+function validateProposals() {
+    const pattern = 'proposals/**/*.yaml';
+    const files = glob.sync(pattern, { nodir: true });
+    if (!files.length) {
+        console.log('ℹ️ No proposals to validate.');
+        return true;
+    }
+    const schema = JSON.parse(read('automation/schemas/proposal.schema.json'));
+    const validate = ajv.compile(schema);
+    let ok = true;
+    for (const f of files) {
+        try {
+            const data = safeLoad(f);
+            const valid = validate(data);
+            if (!valid) {
+                console.error(`❌ Proposal schema errors in ${f}:`);
+                console.error(validate.errors);
+                ok = false;
+            } else {
+                console.log(`✅ ${f} passes proposal schema`);
+            }
+        } catch (e) {
+            console.error(`❌ Failed to parse ${f}: ${e.message}`);
+            ok = false;
+        }
+    }
+    return ok;
+}
+
 function failOnDisallowedPaths(files) {
     let ok = true;
     for (const f of files) {
@@ -133,8 +162,10 @@ console.log('Files considered:', files);
 const pathsOK = failOnDisallowedPaths(files);
 const schemasOK = validateSchemas();
 const refsOK = referentialIntegrity();
+const proposalsOK = validateProposals();
 
-if (!(pathsOK && schemasOK && refsOK)) {
+
+if (!(pathsOK && schemasOK && refsOK && proposalsOK)) {
     console.error('❌ CI validation failed.');
     process.exit(1);
 }
