@@ -21,7 +21,7 @@ jobs:
           node-version: '20'
 
       - name: Install deps
-        run: npm install ajv js-yaml glob markdownlint-cli
+        run: npm install ajv ajv-formats js-yaml glob markdownlint-cli
 
       - name: Set PR SHAs
         if: ${{ github.event_name == 'pull_request' }}
