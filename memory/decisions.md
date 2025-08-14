@@ -42,3 +42,9 @@
 
 - 2025-08-14: Markdownlint expanded to `docs/**/*.md` using relaxed
   `.markdownlint.json` at repo root.
+
+- 2025-08-14: Corrected schema folder naming from `shcemas` → `schemas`; CI
+  schema validation now passes.
+
+- 2025-08-14: Added Prettier config + `.prettierignore`; optional autoformatting
+  available pre-commit, strict enforcement deferred.

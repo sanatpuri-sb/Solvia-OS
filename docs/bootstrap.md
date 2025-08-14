@@ -29,6 +29,8 @@
 > - **Claude Desktop** not installed yet → required before Step F (MCP runtime).
 > - Authoring aid: VS Code **AI inline completions** (e.g., GitHub Copilot) is
 >   enabled. Treat suggestions as drafts; structure enforced by CI in Step D.
+> - Prettier config and `.prettierignore` added to repo; formatting run locally
+>   before commit. This is optional in CI but supported.
 
 ---
 
@@ -126,8 +128,8 @@ Purpose: prevent phantom files & drift.
 - [x] Mark invalid PRs as **fail** (no merge)
 - [x] Main branch must be protected in GitHub settings; require CI pass before
       merge
-- [x] Branch protection → Required status checks: add **`validate`** (use the
-      exact name shown in your PR Checks)
+- [x] Branch protection → Required status checks: add **`validate`** (confirmed
+      as exact name after first successful CI run)
 - [x] Re-enable **Require status checks to pass before merging** (after CI is
       green on `main`)
 - [ ] Re-enable **Require approvals (1)** (solo-friendly only when a second
@@ -144,13 +146,16 @@ unknown paths; you can harden later.)_
 
 ### 4.1 D+1 Hardening Actions (to schedule)
 
-- - [x] Expand markdownlint scope back to `docs/**/*.md` with config in
-        `.markdownlint.json` at repo root
+- [x] Expand markdownlint scope back to `docs/**/*.md` with config in
+      `.markdownlint.json` at repo root
+- [x] Corrected schema folder naming from `shcemas` → `schemas`; CI schema
+      validation now passes
 - [x] Add proposal schema at `automation/schemas/proposal.schema.json` and
       validate `/proposals/**/*.yaml` in CI (schema in `automation/schemas/`,
       proposals under `proposals/`)
-- [ ] Add a CI job to auto-format Markdown (Prettier) before enforcing strict
-      markdownlint ⟵ (keep scheduled; optional if relaxed rules suffice)
+- [x] Add a CI job to auto-format Markdown (Prettier) before enforcing strict
+      markdownlint ⟵ (config and `.prettierignore` added; enforcement deferred
+      until after n8n setup)
 - [x] Add status check aliasing (if job name changes, update Branch Protection
       to match current check name)
 - [ ] Enable **Require approvals (1)** after a second reviewer (or Org) is
@@ -303,3 +308,5 @@ When A–G are green:
   can pick up instantly with zero paste.
 - VS Code AI inline completions (e.g., GitHub Copilot) are enabled for YAML
   authoring; structure enforced via schema hints and CI.
+  - File/folder naming errors (e.g., `shcemas` typo) can break CI; automation
+    will later include a path consistency check.
