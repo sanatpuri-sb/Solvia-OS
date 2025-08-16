@@ -266,18 +266,32 @@ Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
      "ref": "refs/heads/{{ $json[\"branch\"] }}",
      "sha": "{{ $json[\"object\"][\"sha\"] }}"
    }
-
    ```
 
-7. Create file (HTTP PUT) → .../contents/{{ $json["filePath"] }}  
-    Body (JSON): { "message": "{{ $json[\"commitMsg\"] }}", "content":
-   "{{ $json[\"contentB64\"] }}", "branch": "{{ $json[\"branch\"] }}" }
+7. Create file (HTTP PUT) → `.../contents/{{ $json["filePath"] }}`
 
-8. Open PR (HTTP POST) → .../pulls Body (JSON)
-   - `title = {{$json["prTitle"]}}`
-   - `body = {{$json["prBody"]}}`
-   - `head = {{$json["branch"]}}`
-   - `base = main`
+   **Body (JSON)**
+
+   ```jsonc
+   {
+     "message": "{{ $json[\"commitMsg\"] }}",
+     "content": "{{ $json[\"contentB64\"] }}",
+     "branch": "{{ $json[\"branch\"] }}"
+   }
+   ```
+
+8. Open PR (HTTP POST) → .../pulls
+
+   **Body (JSON)**
+
+   ```jsonc
+   {
+   "title": "{{ $json[\"prTitle\"] }}",
+   "body": "{{ $json[\"prBody\"] }}",
+   "head": "{{ $json[\"branch\"] }}",
+   "base": "main"
+   }
+   ```
 
 Note (reserved for §6.5): a future namespace toggle moves proposals into
 `solvia/**` or `solvia_bloom/**`. At that time: set `ns`, update `filePath`,
@@ -313,36 +327,50 @@ Purpose: give the model direct file/tool access without copy-paste.
 - [ ] In the same Claude session, call `retrieve_context` (or read embeddings
       via tool) and then open a PR; both must succeed
 
-- ## 6.5) Namespace Migration (lightweight, pre-smoke)
+## 6.5) Namespace Migration (lightweight, pre-smoke)
 
 Note: n8n already has a namespace toggle (variable `ns`, currently empty). In
 F.5:
 
 - Set `ns` to "solvia" or "solvia_bloom".
-- Change `filePath` to
+- Change `filePath` to  
   `{{ ns + "/proposals/proposal-" + $now.toISO().replace(/[:.]/g,"-") + ".yaml" }}`
 - Tighten the Validate path Code to allow only `${ns}/proposals/`.
 - Update CI allow-lists (add `${ns}/**`, remove root `proposals/**`).
 
-- Purpose: establish clean namespaces before any automation proposals land.
+Purpose: establish clean namespaces before any automation proposals land.
 
-- Rules (temporary for this step only):
+Rules (temporary for this step only):
+
 - No content churn. Only create directories and update paths/globs.
 - No Bloom content yet; create an empty skeleton only.
 - Keep all configs at repo root; extend globs to include both namespaces.
 
-- Actions:
+Actions:
+
 - [ ] Create `/solvia/**` and an empty `/solvia_bloom/**` skeleton:
--       `/docs`, `/memory`, `/proposals`, `/logs`, `/workflows`, `/ops`, `/finance`, `/gtm`, `/assets_meta`
-- [ ] `git mv` existing `/docs/**`, `/memory/**`, `/automation/**`,
-      `/proposals/**`, `/logs/**`, `/workflows/**`
--       into `/solvia/**` (one PR; no content edits)
-- [ ] Update CI/lint/indexer allow-lists and globs to cover both namespaces:
--       - `.github/workflows/ci.yml` (path allow-lists, schema targets)
--       - markdownlint / prettier targets
--       - indexer allow-list (include `solvia/**`, `solvia_bloom/**`; exclude `**/staging/**`, `**/archive/**`)
-- [ ] (Optional) Add a short `solvia/docs/migration_report.md` summarizing
-      moves; delete or archive after merge.
+
+  {{BACKTICKx3}}text /docs /memory /proposals /logs /workflows /ops /finance
+  /gtm /assets_meta {{BACKTICKx3}}
+
+- [ ] `git mv` existing paths into `/solvia/**`:
+
+  {{BACKTICKx3}}bash git mv docs memory automation proposals logs workflows
+  solvia/ {{BACKTICKx3}}
+
+- [ ] Update CI/lint/indexer allow-lists and globs:
+
+```
+
+  .github/workflows/ci.yml # path allow-lists, schema targets
+  markdownlint / prettier # include solvia/** and solvia_bloom/** indexer
+  allow-list: include solvia/**, solvia_bloom/**; exclude **/staging/**,
+  **/archive/**
+
+```
+
+- [ ] (Optional) Add `solvia/docs/migration_report.md` summarizing moves; delete
+      or archive after merge.
 
 - **Go/No-Go F.5**
 - - [ ] New layout renders on GitHub
