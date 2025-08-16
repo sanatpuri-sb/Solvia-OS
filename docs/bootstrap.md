@@ -38,6 +38,7 @@ validation/formatting locally or to install/run n8n (Step E).
 >   before commit. This is optional in CI but supported.
 > - n8n runs in Docker with `N8N_ENCRYPTION_KEY`, `N8N_SECURE_COOKIE=false`,
 >   `GENERIC_TIMEZONE=Asia/Kolkata`. Access via <http://localhost:5678>.
+> - Prettier pinned as a devDependency; CI runs `npm run lint:fmt` (no npx).
 
 ---
 
@@ -169,6 +170,9 @@ unknown paths; you can harden later.)_
       available
 - [x] Repo-wide ignore for macOS junk: add to `.gitignore` .DS_Store
       \*\*/.DS_Store
+- [x] Add npm scripts for Prettier; CI step switched to `npm run lint:fmt`.
+- [x] Store n8n workflow export in `/workflows` without credentials (PAT
+      removed).
 
 ---
 
@@ -296,6 +300,9 @@ Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
 Note (reserved for §6.5): a future namespace toggle moves proposals into
 `solvia/**` or `solvia_bloom/**`. At that time: set `ns`, update `filePath`,
 tighten Validate-path, and update CI allow-lists.
+
+Note: Auth via n8n “GitHub” credential (PAT in n8n), not hard-coded in JSON
+export.
 
 **Go/No-Go E**
 
