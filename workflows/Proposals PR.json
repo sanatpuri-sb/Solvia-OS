@@ -1,0 +1,382 @@
+{
+  "name": "Proposals PR",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-144, -80],
+      "id": "b84c824a-8a42-4553-a4c0-2e093ecb14c5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/{{$node[\"Set fields\"].json[\"owner\"]}}/{{$node[\"Set fields\"].json[\"repo\"]}}/git/refs",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer __PLACEHOLDER__"
+            },
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "User-Agent",
+              "value": "n8n-solvia"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "ref",
+              "value": "={{ \"refs/heads/\" + $node[\"Set fields\"].json[\"branch\"] }}"
+            },
+            {
+              "name": "sha",
+              "value": "={{ $json[\"object\"][\"sha\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [976, 16],
+      "id": "fde4f3ed-5af3-46bb-a562-6bb350d50b93",
+      "name": "Create branch"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{$json[\"owner\"]}}/{{$json[\"repo\"]}}/git/ref/heads/main",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer __PLACEHOLDER__"
+            },
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "User-Agent",
+              "value": "n8n-solvia"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [752, 16],
+      "id": "9be7b063-c1ef-4ab2-8291-0c9d78551842",
+      "name": "Get main SHA"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a0c607e8-61a8-427b-a693-b83dd4bd2d90",
+              "name": "owner",
+              "value": "sanatpuri-sb",
+              "type": "string"
+            },
+            {
+              "id": "54e7a1fc-58ec-4864-9c36-b81172daa6ec",
+              "name": "repo",
+              "value": "solvia_os",
+              "type": "string"
+            },
+            {
+              "id": "9c2088d4-1c42-4edd-88c8-72047ac28b77",
+              "name": "branch",
+              "value": "={{ \"automation/proposal-\" + $now.toISO().replace(/[:.]/g, \"-\") }}",
+              "type": "string"
+            },
+            {
+              "id": "0ce6d980-ac3c-4d49-864a-1107e5736484",
+              "name": "filePath",
+              "value": "={{ \"proposals/proposal-\" + $now.toISO().replace(/[:.]/g,\"-\") + \".yaml\" }}",
+              "type": "string"
+            },
+            {
+              "id": "82a22eb7-3848-42f4-9ae3-94e99deef36f",
+              "name": "commitMsg",
+              "value": "chore(proposals): seed tiny proposal",
+              "type": "string"
+            },
+            {
+              "id": "e4d34c0d-4cb0-49e2-ba26-ca8d8de0d0d7",
+              "name": "prTitle",
+              "value": "chore: add tiny proposal via n8n",
+              "type": "string"
+            },
+            {
+              "id": "61ebfd77-8502-4762-ac0f-72091a86238b",
+              "name": "prBody",
+              "value": "Automated proposal created by n8n.",
+              "type": "string"
+            },
+            {
+              "id": "f3c857df-b02e-432e-9c2d-e4dba7e30875",
+              "name": "proposalContent",
+              "value": "=title: Automated proposal seed\nrationale: Verify n8n → PR → CI path end-to-end.\nlinked_metrics: []\nrisk: low\nchanges:\n  - file: docs/placeholder.md\n    type: add\n    preview: Add a placeholder doc via proposal seed\nrollback: revert this PR\nacceptance_criteria:\n  - CI passes proposal schema",
+              "type": "string"
+            },
+            {
+              "id": "244dd44d-e98a-4395-a7be-437c6dd6271f",
+              "name": "ns",
+              "value": "={{ \"\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [80, 16],
+      "id": "aee7e018-e94f-4fe1-98ea-3f17b4339c8e",
+      "name": "Set fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/{{$node[\"Set fields\"].json[\"owner\"]}}/{{$node[\"Set fields\"].json[\"repo\"]}}/pulls",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{$node[\"Set fields\"].json[\"prTitle\"]}}"
+            },
+            {
+              "name": "body",
+              "value": "={{$node[\"Set fields\"].json[\"prBody\"]}}"
+            },
+            {
+              "name": "=head",
+              "value": "={{$node[\"Set fields\"].json[\"branch\"]}}"
+            },
+            {
+              "name": "base",
+              "value": "main"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1424, 16],
+      "id": "9d4d985e-2dc5-45c3-ba40-590f8016a69a",
+      "name": "Open PR",
+      "credentials": {
+        "githubApi": {
+          "id": "pcbFJlRUN5aGMPX6",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9,
+              "triggerAtMinute": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-144, 112],
+      "id": "ec9aa781-e154-4ca6-a434-63f869876119",
+      "name": "Cron trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $json.filePath || \"\";\nconst allowed = [\"proposals/\", \"solvia/proposals/\", \"solvia_bloom/proposals/\"]; // tolerant\nif (!allowed.some(prefix => p.startsWith(prefix))) {\n  throw new Error(`Refusing to write outside proposals dirs (got: ${p})`);\n}\nreturn [$json];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [304, 16],
+      "id": "a989aa97-bb71-40d3-8728-cc73716040ed",
+      "name": "Validate path"
+    },
+    {
+      "parameters": {
+        "jsCode": "const content = String($json.proposalContent || \"\");\nreturn [{ ...$json, contentB64: Buffer.from(content, \"utf8\").toString(\"base64\") }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [528, 16],
+      "id": "1a601a66-9ca6-40cb-86fe-dc6d20c39e0b",
+      "name": "Create base64"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.github.com/repos/{{$node[\"Set fields\"].json[\"owner\"]}}/{{$node[\"Set fields\"].json[\"repo\"]}}/contents/{{$node[\"Set fields\"].json[\"filePath\"]}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{$node[\"Set fields\"].json[\"commitMsg\"]}}"
+            },
+            {
+              "name": "content",
+              "value": "={{$node[\"Create base64\"].json[\"contentB64\"]}}"
+            },
+            {
+              "name": "=branch",
+              "value": "={{$node[\"Set fields\"].json[\"branch\"]}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 16],
+      "id": "8a82cce5-2bb2-4fc4-ad4a-ae290f5e5433",
+      "name": "Create file",
+      "credentials": {
+        "githubApi": {
+          "id": "pcbFJlRUN5aGMPX6",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Cron trigger": [
+      {
+        "json": {
+          "name": "First item",
+          "code": 1
+        }
+      },
+      {
+        "json": {
+          "name": "Second item",
+          "code": 2
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Set fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get main SHA": {
+      "main": [
+        [
+          {
+            "node": "Create branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set fields": {
+      "main": [
+        [
+          {
+            "node": "Validate path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create branch": {
+      "main": [
+        [
+          {
+            "node": "Create file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron trigger": {
+      "main": [
+        [
+          {
+            "node": "Set fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate path": {
+      "main": [
+        [
+          {
+            "node": "Create base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create base64": {
+      "main": [
+        [
+          {
+            "node": "Get main SHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create file": {
+      "main": [
+        [
+          {
+            "node": "Open PR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4e9d5ed1-79f7-4ae6-9ade-76890f49a87c",
+  "meta": {
+    "instanceId": "0b815ea58a78c6dc022d0abed32705a8caaf080220406a25dcfebed9d4510c36"
+  },
+  "id": "MRrqVbMMYwo3GuuZ",
+  "tags": []
+}
