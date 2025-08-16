@@ -1,0 +1,7 @@
+title: Test proposal
+rationale: Verify automation writes schema-compliant proposals.
+linked_metrics: []
+risk: Low
+changes: []
+rollback: Not needed for test
+acceptance_criteria: File gets created and CI passes.
