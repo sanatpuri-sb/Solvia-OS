@@ -203,7 +203,6 @@ Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
 1. Cron → daily @ 09:10 (Asia/Kolkata)
 
 2. Set fields (Manual mapping)
-
    - `owner` = `<your-github-username>`
    - `repo` = `solvia_os`
    - `branch`
@@ -255,13 +254,11 @@ Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
 
 6. Create branch (HTTP POST) → `.../git/refs`  
    Body (JSON):
-
    - `ref = "refs/heads/{{$json["branch"]}}"`
    - `sha = {{$json["object"]["sha"]}}`
 
 7. Create file (HTTP PUT) → `.../contents/{{$json["filePath"]}}`  
    Body (JSON):
-
    - `message = {{$json["commitMsg"]}}`
    - `content = {{$json["contentB64"]}}`
    - `branch = {{$json["branch"]}}`
