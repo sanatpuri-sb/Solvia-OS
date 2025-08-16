@@ -206,7 +206,9 @@ business deliverables.
 | **6**   | Orchestration & Skill Agents                               | Add LangChain/CrewAI to coordinate different roles                                                                                                                                                                                                                                                                  |
 | Ongoing | Self-Evolution Loop                                        | Detect contradictions, propose improvements, track metrics                                                                                                                                                                                                                                                          |
 
-**Estimated Effort:** ~70–80 hours over 6 weeks → evolves indefinitely.
+**Estimated Effort:** ~70–80 hours over 6 weeks → evolves indefinitely. See
+**way_forward_post_bootstrap.md** for the post-bootstrap phase checklists and
+gates.
 
 ---
 

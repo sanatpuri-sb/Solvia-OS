@@ -52,3 +52,34 @@
 - 2025-08-14: CI uses GitHub-hosted runners with Node 20 (pinned via actions).
   Local Node is optional unless running validators/Prettier locally or
   installing n8n. Prereq updated accordingly.
+
+- 2025-08-16: Adopted namespaced layout — `/solvia/**` live; `/solvia_bloom/**`
+  skeleton (empty).
+
+- 2025-08-16: Completed Bootstrap F.5 (Namespace Migration) **before** Smoke
+  Test (G); IDs preserved; no content churn.
+
+- 2025-08-16: Root configs (CI/lint/formatter) remain canonical; globs now cover
+  both `solvia/**` and `solvia_bloom/**`; no per-namespace copies by default.
+
+- 2025-08-16: CI/indexer allow-lists updated: include `solvia/**`,
+  `solvia_bloom/**`; exclude `**/staging/**`, `**/archive/**`.
+
+- 2025-08-16: First automation proposals must target namespaced paths;
+  proposal-only mode remains; no direct writes to `main`.
+
+- 2025-08-16: Schema redesign (Phase 1) is a prerequisite for legacy ingestion
+  (Phase 3); adopt **core + extensions** approach (core sets
+  `additionalProperties: false`; optional typed `extensions` object).
+
+- 2025-08-16: “Current state vs master plan” (Phase 4) scheduled **after**
+  legacy ingestion (Phase 3) to reflect reality; no early delta pass.
+
+- 2025-08-16: Mirrors continue read-only; Bloom inherits root configs until a
+  justified override is proposed via PR.
+
+- 2025-08-16: Any migration report (`solvia/docs/migration_report.md`) is
+  ephemeral documentation; may be deleted/archived post-merge.
+
+- 2025-08-16: Follow-Up Plan drafted as `docs/way_forward_post_bootstrap.md`
+  (root). Will move to `/solvia/docs/` during Namespace Migration (F.5).
