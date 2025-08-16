@@ -37,7 +37,7 @@ validation/formatting locally or to install/run n8n (Step E).
 > - Prettier config and `.prettierignore` added to repo; formatting run locally
 >   before commit. This is optional in CI but supported.
 > - n8n runs in Docker with `N8N_ENCRYPTION_KEY`, `N8N_SECURE_COOKIE=false`,
->   `GENERIC_TIMEZONE=Asia/Kolkata`. Access via http://localhost:5678.
+>   `GENERIC_TIMEZONE=Asia/Kolkata`. Access via <http://localhost:5678>.
 
 ---
 
@@ -206,17 +206,22 @@ Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
    - `owner` = `<your-github-username>`
    - `repo` = `solvia_os`
    - `branch`
+
      ```text
      {{ "automation/proposal-" + $now.toISO().replace(/[:.]/g,"-") }}
      ```
+
    - `filePath`
+
      ```text
      {{ "proposals/proposal-" + $now.toISO().replace(/[:.]/g,"-") + ".yaml" }}
      ```
+
    - `commitMsg` = `chore(proposals): seed tiny proposal`
    - `prTitle` = `chore: add tiny proposal via n8n`
    - `prBody` = `Automated proposal created by n8n.`
    - `proposalContent` (schema-minimal; passes CI)
+
      ```yaml
      title: Automated proposal seed
      rationale: Verify n8n → PR → CI path end-to-end.
@@ -252,19 +257,23 @@ Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
 5. Get main SHA (HTTP GET)  
    `https://api.github.com/repos/{{$json["owner"]}}/{{$json["repo"]}}/git/ref/heads/main`
 
-6. Create branch (HTTP POST) → `.../git/refs`  
-   Body (JSON):
-   - `ref = "refs/heads/{{$json["branch"]}}"`
-   - `sha = {{$json["object"]["sha"]}}`
+6. Create branch (HTTP POST) → `.../git/refs`
 
-7. Create file (HTTP PUT) → `.../contents/{{$json["filePath"]}}`  
-   Body (JSON):
-   - `message = {{$json["commitMsg"]}}`
-   - `content = {{$json["contentB64"]}}`
-   - `branch = {{$json["branch"]}}`
+   **Body (JSON)**
 
-8. Open PR (HTTP POST) → `.../pulls`  
-   Body (JSON):
+   ```jsonc
+   {
+     "ref": "refs/heads/{{ $json[\"branch\"] }}",
+     "sha": "{{ $json[\"object\"][\"sha\"] }}"
+   }
+
+   ```
+
+7. Create file (HTTP PUT) → .../contents/{{ $json["filePath"] }}  
+    Body (JSON): { "message": "{{ $json[\"commitMsg\"] }}", "content":
+   "{{ $json[\"contentB64\"] }}", "branch": "{{ $json[\"branch\"] }}" }
+
+8. Open PR (HTTP POST) → .../pulls Body (JSON)
    - `title = {{$json["prTitle"]}}`
    - `body = {{$json["prBody"]}}`
    - `head = {{$json["branch"]}}`
