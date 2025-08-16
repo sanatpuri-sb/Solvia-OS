@@ -2,3 +2,5 @@ automation/chroma/
 # macOS
 .DS_Store
 **/.DS_Store
+# Node
+node_modules/
