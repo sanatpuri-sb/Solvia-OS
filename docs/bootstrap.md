@@ -217,32 +217,32 @@ Purpose: give the model direct file/tool access without copy-paste.
 - [ ] In the same Claude session, call `retrieve_context` (or read embeddings
       via tool) and then open a PR; both must succeed
 
-* ## 6.5) Namespace Migration (lightweight, pre-smoke)
-*
-* Purpose: establish clean namespaces before any automation proposals land.
-*
-* Rules (temporary for this step only):
-* - No content churn. Only create directories and update paths/globs.
-* - No Bloom content yet; create an empty skeleton only.
-* - Keep all configs at repo root; extend globs to include both namespaces.
-*
-* Actions:
-* - [ ] Create `/solvia/**` and an empty `/solvia_bloom/**` skeleton:
-*       `/docs`, `/memory`, `/proposals`, `/logs`, `/workflows`, `/ops`, `/finance`, `/gtm`, `/assets_meta`
-* - [ ] `git mv` existing `/docs/**`, `/memory/**`, `/automation/**`,
-        `/proposals/**`, `/logs/**`, `/workflows/**`
-*       into `/solvia/**` (one PR; no content edits)
-* - [ ] Update CI/lint/indexer allow-lists and globs to cover both namespaces:
-*       - `.github/workflows/ci.yml` (path allow-lists, schema targets)
-*       - markdownlint / prettier targets
-*       - indexer allow-list (include `solvia/**`, `solvia_bloom/**`; exclude `**/staging/**`, `**/archive/**`)
-* - [ ] (Optional) Add a short `solvia/docs/migration_report.md` summarizing
-        moves; delete or archive after merge.
-*
-* **Go/No-Go F.5**
-* - [ ] New layout renders on GitHub
-* - [ ] CI green with updated globs (no broken links/IDs)
-* - [ ] No non-migration content changes in the PR
+- ## 6.5) Namespace Migration (lightweight, pre-smoke)
+
+- Purpose: establish clean namespaces before any automation proposals land.
+
+- Rules (temporary for this step only):
+- No content churn. Only create directories and update paths/globs.
+- No Bloom content yet; create an empty skeleton only.
+- Keep all configs at repo root; extend globs to include both namespaces.
+
+- Actions:
+- [ ] Create `/solvia/**` and an empty `/solvia_bloom/**` skeleton:
+-       `/docs`, `/memory`, `/proposals`, `/logs`, `/workflows`, `/ops`, `/finance`, `/gtm`, `/assets_meta`
+- [ ] `git mv` existing `/docs/**`, `/memory/**`, `/automation/**`,
+      `/proposals/**`, `/logs/**`, `/workflows/**`
+-       into `/solvia/**` (one PR; no content edits)
+- [ ] Update CI/lint/indexer allow-lists and globs to cover both namespaces:
+-       - `.github/workflows/ci.yml` (path allow-lists, schema targets)
+-       - markdownlint / prettier targets
+-       - indexer allow-list (include `solvia/**`, `solvia_bloom/**`; exclude `**/staging/**`, `**/archive/**`)
+- [ ] (Optional) Add a short `solvia/docs/migration_report.md` summarizing
+      moves; delete or archive after merge.
+
+- **Go/No-Go F.5**
+- - [ ] New layout renders on GitHub
+- - [ ] CI green with updated globs (no broken links/IDs)
+- - [ ] No non-migration content changes in the PR
 
 ---
 

@@ -6,7 +6,7 @@ mode; branch protection on.
 
 ---
 
-### Phase 0 — Namespace Foundations (completed in Bootstrap)
+## Phase 0 — Namespace Foundations (completed in Bootstrap)
 
 **Goal:** Establish clean domain separation without changing behavior.  
 **Why:** Prevents future migration pain as business content appears; keeps
@@ -30,7 +30,7 @@ OS/system memory distinct from business artifacts.
 
 ---
 
-### Phase 1 — Self-Audit & Opinionated Schema Redesign
+## Phase 1 — Self-Audit & Opinionated Schema Redesign
 
 **Goal:** Assess and improve structure, IDs, links, and schemas before further
 ingestion.  
@@ -55,7 +55,7 @@ ingestion.
 
 ---
 
-### Phase 2 — Solvia Bloom Bootstrapping
+## Phase 2 — Solvia Bloom Bootstrapping
 
 **Goal:** Stand up the business domain as a separate “brain” with parallel
 structure.  
@@ -77,7 +77,7 @@ metrics/contradictions and safer scaling.
 
 ---
 
-### Phase 3 — Legacy Dump & Selective Incorporation
+## Phase 3 — Legacy Dump & Selective Incorporation
 
 **Goal:** Ingest old `.md/.txt` content, structure it, deduplicate, and
 selectively merge.  
@@ -102,7 +102,7 @@ polluting live namespaces; one-way staging prevents drift.
 
 ---
 
-### Phase 4 — Current State vs Master Plan
+## Phase 4 — Current State vs Master Plan
 
 **Goal:** Compare current state vs master plan and update where reality
 differs.  
@@ -123,7 +123,7 @@ mirrors reality.
 
 ---
 
-### Phase 5 — Interfaces & Mirrors
+## Phase 5 — Interfaces & Mirrors
 
 **Goal:** Create human-friendly read-only views.  
 **Why:** Reduce cognitive load and review friction without creating new writable
@@ -142,7 +142,7 @@ surfaces.
 
 ---
 
-### Phase 6 — Business Data Surfaces (Assets/CRM/Campaigns)
+## Phase 6 — Business Data Surfaces (Assets/CRM/Campaigns)
 
 **Goal:** Register assets/CRM/campaign metadata in governed YAML; keep
 binaries/PII external.  
@@ -163,7 +163,7 @@ binaries/PII external.
 
 ---
 
-### Phase 7 — Connectors & Project Tools (capability-driven, proposal-only)
+## Phase 7 — Connectors & Project Tools (capability-driven, proposal-only)
 
 **Goal:** Add connectors only when justified.  
 **Why:** Prevent tool sprawl; capabilities follow demonstrated need, not
@@ -182,7 +182,7 @@ wishlists.
 
 ---
 
-### Phase 8 — Orchestration & Scaling (optional, later)
+## Phase 8 — Orchestration & Scaling (optional, later)
 
 **Goal:** Introduce advanced orchestration only when needed.  
 **Why:** Adopt LangChain/LangGraph/LlamaIndex/Beam only when
@@ -201,7 +201,7 @@ gatekeeper.
 
 ---
 
-### Phase 9 — Ongoing Self-Audit & Metrics (per domain)
+## Phase 9 — Ongoing Self-Audit & Metrics (per domain)
 
 **Goal:** Sustain hygiene and momentum.  
 **Why:** Catch drift early; maintain symmetry and data quality as scope grows.
@@ -219,7 +219,7 @@ gatekeeper.
 
 ---
 
-### Governance — Non-Negotiable
+## Governance — Non-Negotiable
 
 - GitHub repo is single source of truth.
 - Writes only via proposals and PRs; branch protection + CI required.
