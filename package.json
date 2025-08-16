@@ -1,0 +1,14 @@
+{
+  "name": "solvia_os",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "fmt": "prettier --write \"docs/**/*.md\" \"memory/decisions.md\"",
+    "lint:fmt": "prettier --check \"docs/**/*.md\" \"memory/decisions.md\""
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
