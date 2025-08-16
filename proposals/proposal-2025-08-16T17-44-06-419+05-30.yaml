@@ -1,0 +1,11 @@
+title: Automated proposal seed
+rationale: Verify n8n → PR → CI path end-to-end.
+linked_metrics: []
+risk: low
+changes:
+  - file: docs/placeholder.md
+    type: add
+    preview: Add a placeholder doc via proposal seed
+rollback: revert this PR
+acceptance_criteria:
+  - CI passes proposal schema
