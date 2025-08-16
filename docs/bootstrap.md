@@ -15,7 +15,7 @@
 - [ ] Node 20+ (only if you’ll run tools locally or install n8n; CI runners
       already have Node 20)
 - [x] Python 3.13.6 installed
-- [ ] Docker Desktop (optional; helpful for n8n/Chroma)
+- [x] Docker Desktop (running n8n container)
 - [x] Git configured locally (GitHub Desktop working; can push)
 - [x] VS Code installed and can edit repo
 - [ ] Backup location set (2nd remote, iCloud/Time Machine, or external drive)
@@ -36,6 +36,8 @@ validation/formatting locally or to install/run n8n (Step E).
 >   enabled. Treat suggestions as drafts; structure enforced by CI in Step D.
 > - Prettier config and `.prettierignore` added to repo; formatting run locally
 >   before commit. This is optional in CI but supported.
+> - n8n runs in Docker with `N8N_ENCRYPTION_KEY`, `N8N_SECURE_COOKIE=false`,
+>   `GENERIC_TIMEZONE=Asia/Kolkata`. Access via <http://localhost:5678>.
 
 ---
 
@@ -165,6 +167,8 @@ unknown paths; you can harden later.)_
       to match current check name)
 - [ ] Enable **Require approvals (1)** after a second reviewer (or Org) is
       available
+- [x] Repo-wide ignore for macOS junk: add to `.gitignore` .DS_Store
+      \*\*/.DS_Store
 
 ---
 
@@ -172,26 +176,132 @@ unknown paths; you can harden later.)_
 
 Purpose: close loops without you as glue.
 
-- [ ] Run n8n (Docker or local)
-  > Requires Node 20+ (local) **or** Docker. Choose one.
-- [ ] Create 2 simple workflows:
-
-1. **Proposals Cron (daily)**: read repo → write a tiny, valid proposal to
-   `/proposals` → open a PR
-2. **Mirror Sync (optional)**: push read-only views (tasks/beliefs/goals) to
-   Notion/Obsidian/Asana
-
-- [ ] Store secrets in n8n credentials (never in repo)
-- [ ] Enforce in workflows: write only to `/proposals/` (open PR); never commit
-      directly to main
-- [ ] Confirm main-branch protection in GitHub blocks direct pushes and requires
+- [x] Run n8n (Docker)
+  - Container name: `n8n_solvia`
+  - Port: `5678` (open in browser at `http://localhost:5678`)
+  - Volume: host `~/<your-path>/solvia_os/.n8n` → container `/home/node/.n8n`
+  - Env vars:
+    - `N8N_ENCRYPTION_KEY=<32+ char random>`
+    - `N8N_SECURE_COOKIE=false` (local HTTP)
+    - `GENERIC_TIMEZONE=Asia/Kolkata`
+- [x] Store secrets in n8n credentials (never in repo)
+  - GitHub (predefined): PAT with `repo` (contents + pull_requests)
+- [x] Enforce in workflows: write only to `/proposals/**` (open PR); never
+      commit directly to `main`
+- [x] Confirm main-branch protection in GitHub blocks direct pushes and requires
       CI pass
-- [ ] Workflow exports saved under `/workflows`
+- [x] Create workflow: **Proposals Cron (daily)**
+- [ ] Create workflow: **Mirror Sync (optional)** (push read-only views to
+      Notion/Obsidian/Asana)
+- [x] Export workflows to repo (no credentials) under `/workflows/` (e.g.,
+      `workflows/proposals_pr.json`)
+
+### Workflow: Proposals Cron (daily)
+
+Runs at 09:10 IST. Manual run validated branch → file → PR → CI ✅.
+
+1. Cron → daily @ 09:10 (Asia/Kolkata)
+
+2. Set fields (Manual mapping)
+   - `owner` = `<your-github-username>`
+   - `repo` = `solvia_os`
+   - `branch`
+
+     ```text
+     {{ "automation/proposal-" + $now.toISO().replace(/[:.]/g,"-") }}
+     ```
+
+   - `filePath`
+
+     ```text
+     {{ "proposals/proposal-" + $now.toISO().replace(/[:.]/g,"-") + ".yaml" }}
+     ```
+
+   - `commitMsg` = `chore(proposals): seed tiny proposal`
+   - `prTitle` = `chore: add tiny proposal via n8n`
+   - `prBody` = `Automated proposal created by n8n.`
+   - `proposalContent` (schema-minimal; passes CI)
+
+     ```yaml
+     title: Automated proposal seed
+     rationale: Verify n8n → PR → CI path end-to-end.
+     linked_metrics: []
+     risk: low
+     changes:
+       - file: docs/placeholder.md
+         type: add
+         preview: Add a placeholder doc via proposal seed
+     rollback: revert this PR
+     acceptance_criteria:
+       - CI passes proposal schema
+     ```
+
+3. Validate path (Code) — fail-closed writer
+
+   ```js
+   const p = $json.filePath || "";
+   const allowed = ["proposals/", "solvia/proposals/", "solvia_bloom/proposals/"];
+   if (!allowed.some(prefix => p.startsWith(prefix))) {
+     throw new Error(`Refusing to write outside proposals dirs (got: ${p})`);
+   }
+   return [$json];
+   ```
+
+4. Create base64 (Code) — single encode
+
+   ```js
+   const content = String($json.proposalContent || "");
+   return [{ ...$json, contentB64: Buffer.from(content, "utf8").toString("base64") }];
+   ```
+
+5. Get main SHA (HTTP GET)  
+   `https://api.github.com/repos/{{$json["owner"]}}/{{$json["repo"]}}/git/ref/heads/main`
+
+6. Create branch (HTTP POST) → `.../git/refs`
+
+   **Body (JSON)**
+
+   ```jsonc
+   {
+     "ref": "refs/heads/{{ $json[\"branch\"] }}",
+     "sha": "{{ $json[\"object\"][\"sha\"] }}"
+   }
+   ```
+
+7. Create file (HTTP PUT) → `.../contents/{{ $json["filePath"] }}`
+
+   **Body (JSON)**
+
+   ```jsonc
+   {
+     "message": "{{ $json[\"commitMsg\"] }}",
+     "content": "{{ $json[\"contentB64\"] }}",
+     "branch": "{{ $json[\"branch\"] }}"
+   }
+   ```
+
+8. Open PR (HTTP POST) → .../pulls
+
+   **Body (JSON)**
+
+   ```jsonc
+   {
+   "title": "{{ $json[\"prTitle\"] }}",
+   "body": "{{ $json[\"prBody\"] }}",
+   "head": "{{ $json[\"branch\"] }}",
+   "base": "main"
+   }
+   ```
+
+Note (reserved for §6.5): a future namespace toggle moves proposals into
+`solvia/**` or `solvia_bloom/**`. At that time: set `ns`, update `filePath`,
+tighten Validate-path, and update CI allow-lists.
 
 **Go/No-Go E**
 
-- [ ] Manually trigger Proposals Cron → a PR appears with a trivial, valid
-      change (e.g., a new tag in `identity.yaml`)
+- [x] Manual trigger creates branch + file + PR
+- [x] CI passes proposal schema (no `.DS_Store` noise)
+- [x] Cron enabled @ 09:10 IST
 
 ---
 
@@ -217,32 +327,62 @@ Purpose: give the model direct file/tool access without copy-paste.
 - [ ] In the same Claude session, call `retrieve_context` (or read embeddings
       via tool) and then open a PR; both must succeed
 
-- ## 6.5) Namespace Migration (lightweight, pre-smoke)
+## 6.5) Namespace Migration (lightweight, pre-smoke)
 
-- Purpose: establish clean namespaces before any automation proposals land.
+Note: n8n already has a namespace toggle (variable `ns`, currently empty). In
+F.5:
 
-- Rules (temporary for this step only):
+- Set `ns` to "solvia" or "solvia_bloom".
+- Change `filePath` to  
+  `{{ ns + "/proposals/proposal-" + $now.toISO().replace(/[:.]/g,"-") + ".yaml" }}`
+- Tighten the Validate path Code to allow only `${ns}/proposals/`.
+- Update CI allow-lists (add `${ns}/**`, remove root `proposals/**`).
+
+Purpose: establish clean namespaces before any automation proposals land.
+
+Rules (temporary for this step only):
+
 - No content churn. Only create directories and update paths/globs.
 - No Bloom content yet; create an empty skeleton only.
 - Keep all configs at repo root; extend globs to include both namespaces.
 
-- Actions:
+Actions
+
 - [ ] Create `/solvia/**` and an empty `/solvia_bloom/**` skeleton:
--       `/docs`, `/memory`, `/proposals`, `/logs`, `/workflows`, `/ops`, `/finance`, `/gtm`, `/assets_meta`
-- [ ] `git mv` existing `/docs/**`, `/memory/**`, `/automation/**`,
-      `/proposals/**`, `/logs/**`, `/workflows/**`
--       into `/solvia/**` (one PR; no content edits)
-- [ ] Update CI/lint/indexer allow-lists and globs to cover both namespaces:
--       - `.github/workflows/ci.yml` (path allow-lists, schema targets)
--       - markdownlint / prettier targets
--       - indexer allow-list (include `solvia/**`, `solvia_bloom/**`; exclude `**/staging/**`, `**/archive/**`)
-- [ ] (Optional) Add a short `solvia/docs/migration_report.md` summarizing
-      moves; delete or archive after merge.
+
+````text
+/docs
+/memory
+/proposals
+/logs
+/workflows
+/ops
+/finance
+/gtm
+/assets_meta
+```b
+
+- [ ] `git mv` existing paths into `/solvia/**`:
+
+```bash
+git mv docs memory automation proposals logs workflows solvia/
+````
+
+- [ ] Update CI/lint/indexer allow-lists and globs:
+
+```yaml
+# .github/workflows/ci.yml — path allow-lists, schema targets
+# markdownlint / prettier — include solvia/** and solvia_bloom/**
+# indexer allow-list: include solvia/**, solvia_bloom/**; exclude **/staging/**, **/archive/**
+```
+
+- [ ] (Optional) Add `solvia/docs/migration_report.md` summarizing moves; delete
+      or archive after merge.
 
 - **Go/No-Go F.5**
-- - [ ] New layout renders on GitHub
-- - [ ] CI green with updated globs (no broken links/IDs)
-- - [ ] No non-migration content changes in the PR
+- [ ] New layout renders on GitHub
+- [ ] CI green with updated globs (no broken links/IDs)
+- [ ] No non-migration content changes in the PR
 
 ---
 
@@ -267,8 +407,9 @@ Run this **in one Claude session, after F.5 migration** (namespaced paths):
 
 When A–G are green:
 
-- Confirm F.5 Namespace Migration completed; automation’s first proposals target
-  `/solvia/**` and `/solvia_bloom/**`.
+- Confirm F.5 Namespace Migration completed; automation proposals now target
+  `solvia/**` or `solvia_bloom/**` (n8n `ns` toggle flipped; CI allow-lists
+  updated).
 - Next: follow **way_forward_post_bootstrap.md** for post-bootstrap phases
   (human-in-the-loop).
 - **Day-to-day lives in Claude MCP** (Operator).
@@ -326,6 +467,7 @@ When A–G are green:
 - [x] B Day-1 memory seeded ✔
 - [x] C Vector retrieval ✔ (local embeddings)
 - [x] D CI fail-closed ✔
+- [x] E n8n proposal PR ✔
 - [ ] F MCP proposal PR ✔
 - [ ] F.5 Namespace migration (dirs + globs updated) ✔
 - [ ] G Smoke test (read→retrieve→propose→validate→reflect) ✔

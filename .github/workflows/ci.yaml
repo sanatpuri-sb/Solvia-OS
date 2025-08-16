@@ -20,8 +20,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install deps
-        run: npm install ajv ajv-formats js-yaml glob markdownlint-cli
+      - name: Install repo dev deps (prettier etc.)
+        run: npm ci
+
+      - name: Install validator deps
+        run: npm install ajv@8 ajv-formats js-yaml glob markdownlint-cli
 
       - name: Set PR SHAs
         if: ${{ github.event_name == 'pull_request' }}
@@ -33,7 +36,8 @@ jobs:
         run: node automation/validate.js
 
       - name: Prettier (check formatting)
-        run: npx prettier --check "docs/**/*.md" "memory/decisions.md"
+        run: npm run lint:fmt
 
       - name: Lint Markdown (docs & decisions)
-        run: npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config .markdownlint.json
+        run: |
+          npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config .markdownlint.json

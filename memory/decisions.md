@@ -83,3 +83,20 @@
 
 - 2025-08-16: Follow-Up Plan drafted as `docs/way_forward_post_bootstrap.md`
   (root). Will move to `/solvia/docs/` during Namespace Migration (F.5).
+
+- 2025-08-16: n8n automation engine brought online (Docker). Secrets stored only
+  in n8n credentials; repo exports under `/workflows/` contain no secrets.
+
+- 2025-08-16: First workflow “Proposals Cron” validated manually end-to-end:
+  branch → file under `/proposals/**` → PR → CI pass. Confirms automation
+  respects proposal-only mode and branch protection.
+
+- 2025-08-16: Cron scheduled daily @ 09:10 IST; file path generation uses
+  timestamped branch + `proposals/proposal-<ISO>.yaml`.
+
+- 2025-08-16: Guardrails in workflow: fail-closed validation restricts writes to
+  `/proposals/**` (future-ready for `/solvia/**/proposals` and
+  `/solvia_bloom/**/proposals`).
+
+- 2025-08-16: Binary noise from `.DS_Store` resolved by repo cleanup; CI schema
+  validation confirmed green on automation PRs. f
