@@ -99,4 +99,4 @@
   `/solvia_bloom/**/proposals`).
 
 - 2025-08-16: Binary noise from `.DS_Store` resolved by repo cleanup; CI schema
-  validation confirmed green on automation PRs.
+  validation confirmed green on automation PRs. f
