@@ -33,7 +33,9 @@ jobs:
         run: node automation/validate.js
 
       - name: Prettier (check formatting)
-        run: npx prettier --check "docs/**/*.md" "memory/decisions.md"
+        rrun: npm run lint:fmt
 
       - name: Lint Markdown (docs & decisions)
-        run: npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config .markdownlint.json
+        run:
+          npx markdownlint 'docs/**/*.md' 'memory/decisions.md' --config
+          .markdownlint.json
