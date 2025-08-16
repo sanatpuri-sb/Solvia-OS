@@ -1,0 +1,9 @@
+title: Automated proposal seed
+rationale: Verify n8n → PR → CI path end-to-end.
+linked_metrics: []
+risk: low
+changes:
+- seed a minimal proposal via n8n
+rollback: revert this PR
+acceptance_criteria:
+- CI passes proposal schema
