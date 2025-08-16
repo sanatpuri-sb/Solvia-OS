@@ -26,6 +26,8 @@ const allowed = [
   /^\.vscode\/settings\.json$/, // editor schema hints
   /^\.prettierignore$/, // ← allow Prettier ignore at repo root
   /^\.prettierrc(?:\.json)?$/, // ← allow Prettier config at repo root
+  /^package\.json$/, // <-- add this
+  /^package-lock\.json$/, // <-- add this
 ]
 
 // Changed files (PR) or all tracked files (push)
