@@ -346,36 +346,43 @@ Rules (temporary for this step only):
 - No Bloom content yet; create an empty skeleton only.
 - Keep all configs at repo root; extend globs to include both namespaces.
 
-Actions:
+Actions
 
 - [ ] Create `/solvia/**` and an empty `/solvia_bloom/**` skeleton:
 
-  {{BACKTICKx3}}text /docs /memory /proposals /logs /workflows /ops /finance
-  /gtm /assets_meta {{BACKTICKx3}}
+````text
+/docs
+/memory
+/proposals
+/logs
+/workflows
+/ops
+/finance
+/gtm
+/assets_meta
+```b
 
 - [ ] `git mv` existing paths into `/solvia/**`:
 
-  {{BACKTICKx3}}bash git mv docs memory automation proposals logs workflows
-  solvia/ {{BACKTICKx3}}
+```bash
+git mv docs memory automation proposals logs workflows solvia/
+````
 
 - [ ] Update CI/lint/indexer allow-lists and globs:
 
-```
-
-  .github/workflows/ci.yml # path allow-lists, schema targets
-  markdownlint / prettier # include solvia/** and solvia_bloom/** indexer
-  allow-list: include solvia/**, solvia_bloom/**; exclude **/staging/**,
-  **/archive/**
-
+```yaml
+# .github/workflows/ci.yml — path allow-lists, schema targets
+# markdownlint / prettier — include solvia/** and solvia_bloom/**
+# indexer allow-list: include solvia/**, solvia_bloom/**; exclude **/staging/**, **/archive/**
 ```
 
 - [ ] (Optional) Add `solvia/docs/migration_report.md` summarizing moves; delete
       or archive after merge.
 
 - **Go/No-Go F.5**
-- - [ ] New layout renders on GitHub
-- - [ ] CI green with updated globs (no broken links/IDs)
-- - [ ] No non-migration content changes in the PR
+- [ ] New layout renders on GitHub
+- [ ] CI green with updated globs (no broken links/IDs)
+- [ ] No non-migration content changes in the PR
 
 ---
 
